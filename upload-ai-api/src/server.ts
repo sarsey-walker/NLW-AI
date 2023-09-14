@@ -1,19 +1,10 @@
 import {fastify} from 'fastify'
-import { prisma } from './lib/prisma'
+import { getAllPrompts } from './routes/get-all-prompts'
 
 const port = 3333
 const app = fastify()
 
-app.get('/', () => {
-    return 'Hello World!'
-})
-
-app.get('/prompts', async () => {
-
-    const prompts = await prisma.prompt.findMany()
-
-    return prompts
-})
+app.register(getAllPrompts)
 
 app.listen({
     port: port
