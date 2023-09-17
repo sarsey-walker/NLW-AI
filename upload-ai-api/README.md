@@ -6,9 +6,11 @@ This project was generated with `pnpm` package manager
 
 Para começar a rodar rode:
 
-`pnpm i` 
-`pnpm rb` 
-`pnpm prisma generate` 
+```
+    pnpm i
+    pnpm rb 
+    pnpm prisma generate
+```
 
 Se estiver com algum erro ainda, de um `Ctrl + P` e procure por "Typescript: Restart TS server" para ele recarregar 
 
