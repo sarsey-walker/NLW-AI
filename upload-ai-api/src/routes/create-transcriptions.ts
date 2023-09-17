@@ -4,8 +4,9 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { openai } from "../lib/openai";
 
+
 export async function createTranscriptionRoute(app: FastifyInstance) {
-  app.post('/videos/:videoId/transcription', async (req) => {
+  app.post('/videos/:videoId/transcription', async (req, reply) => {
     const paramsSchema = z.object({
       videoId: z.string().uuid(),
     })
@@ -35,8 +36,15 @@ export async function createTranscriptionRoute(app: FastifyInstance) {
       temperature: 0,
       prompt,
     })
-
-    const transcription = response.text
+    .then((resp) => resp)    
+    .catch((err) => {
+      console.log(err)
+    })
+      
+    if(!response){
+      return reply.status(500).send({ error: 'Unknown error.' })
+    }
+    const transcription = response?.text
 
     await prisma.video.update({
       where: {
